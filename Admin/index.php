@@ -9,5 +9,16 @@
     <frameset cols="20%,*" frameborder="0" border="0" >
             <frame src="root/Sidemenu.php" name="menu">
             <frame src="root/Content.php" name="content">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+            <frame src="root/Content.php" name="About">
+
     </frameset>
 </html>
