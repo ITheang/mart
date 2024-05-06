@@ -124,11 +124,11 @@
             </li>
             <hr class="border-t border-black" x-show="sidebarOpen" x-cloak />
             <li x-show="sidebarOpen || !sidebarOpen" class="group">
-                <a href="../view/positions/index.php" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
+                <a href="../view/Permissions/index.php" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <!-- Icon -->
                     <!-- <span>🏠</span> -->
                     <!-- Text -->
-                    <span x-show="sidebarOpen" x-cloak>Positions</span>
+                    <span x-show="sidebarOpen" x-cloak>Permissions</span>
                 </a>
 
             </li>

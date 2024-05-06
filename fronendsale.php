@@ -18,12 +18,17 @@
     .button {
       width: 100%;
       height: 40%;
-      background-color: black;
+      background-color:bisque;
     }
 
     .inline-flex {
       display: flex;
       justify-content: center; /* This centers items horizontally */
+    }
+    .contact{
+      width: 100%;
+      height: 0%;
+      background-color: burlywood;
     }
   </style>
 </head>
@@ -39,7 +44,7 @@
           CARD
         </button>
       </div>
-      <div class="lable mt-4">
+      <div class="lable mt-4 contact">
         <h1 class="text-xl font-bold">Device Connected</h1>
         <div class="boximg mt-2">
           <img src="img/photo_2024-05-04_07-54-58.jpg" alt="" />
@@ -47,12 +52,12 @@
       </div>
     </section>
 
-    <section class="flex flex-col items-center">
+    <section class="flex flex-col  contact">
       <!-- Box 1 - Initially hidden -->
       <div id="box" class="hidden  w-80 h-32 rounded-md mt-4 flex">
         <div class="boximg flex w-50">
           <img src="img/image.png" alt="" />
-        </div>
+        </div> 
         <div class="boximg1 flex w-50">
           <img src="img/photo_2024-05-04_08-27-33.jpg" alt="" />
         </div>
@@ -64,7 +69,9 @@
   </div>
 
   <script>
+
     // Function to show box and hide label and box1
+    
     function showBox() {
       document.getElementById("box").classList.remove("hidden");
       document.getElementById("box1").classList.add("hidden");

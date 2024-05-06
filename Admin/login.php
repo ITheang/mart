@@ -39,7 +39,6 @@
         font-size: 20px;
         margin-bottom: 25px;
     }
-
     .title span {
         color: var(--font-color-sub);
         font-weight: 600;
