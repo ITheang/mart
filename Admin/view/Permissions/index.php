@@ -12,7 +12,7 @@
         <h1 class="text-xl font-bold mb-4">Manage User Permissions</h1>
         <form id="selectForm">
             <div>
-                <label for="role" class="block text-sm font-medium text-gray-700">User Role</label>
+                <label for="role" class="block text-sm font-medium text-gray-700">User name</label>
                 <input type="text" id="role" name="role"
                     class="mt-1 block w-full px-3 py-2 bg-white border border-pink-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-600 focus:border-pink-600" required>
             </div>
@@ -25,20 +25,25 @@
                     <option value="Orders">Orders</option>
                     <option value="products">products</option>
                     <option value="Delete">Delete</option>
-                    
                 </select>
             </div>
             <button type="button" onclick="addPermissions()" class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Permissions
             </button>
         </form>
-        <form id="permissionForm" class="mt-8 space-y-4" style="display: none;">
-            <div id="permissionList" class="space-y-4"></div>
-            <button type="button" onclick="updatePermissions()" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                Update Permissions
-            </button>
-        </form>
     </div>
+    <table class="table-auto" id="permissionList">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Permission</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Permissions will be dynamically added here -->
+        </tbody>
+    </table>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script>
         const selectElement = new Choices('#permissions', {
@@ -54,15 +59,17 @@
         function addPermissions() {
             const selectedPermissions = selectElement.getValue(true);
             const role = document.getElementById('role').value;
-            const permissionList = document.getElementById('permissionList');
+            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
             permissionList.innerHTML = ''; // Clear current list
             selectedPermissions.forEach((permission, index) => {
-                const permissionRow = document.createElement('div');
-                permissionRow.className = 'flex items-center space-x-3';
+                const permissionRow = document.createElement('tr');
                 permissionRow.innerHTML = `
-                    <input type="text" readonly value="${permission}" name="permissions[]" class="flex-1 px-3 py-2 border border-gray-300 rounded-md">
-                    <button type="button" onclick="editPermission(${index})" class="px-3 py-2 bg-yellow-500 text-white rounded-md">Edit</button>
-                    <button type="button" onclick="deletePermission(${index})" class="px-3 py-2 bg-red-500 text-white rounded-md">Delete</button>
+                    <td>${role}</td>
+                    <td>${permission}</td>
+                    <td>
+                        <button type="button" onclick="editPermission(${index})" class="px-3 py-2 bg-yellow-500 text-white rounded-md">Edit</button>
+                        <button type="button" onclick="deletePermission(${index})" class="px-3 py-2 bg-red-500 text-white rounded-md">Delete</button>
+                    </td>
                 `;
                 permissionList.appendChild(permissionRow);
             });
@@ -70,29 +77,20 @@
         }
 
         function editPermission(index) {
-            const permissionList = document.getElementById('permissionList');
-            const permissionInput = permissionList.children[index].querySelector('input');
-            const editedPermission = prompt('Enter the edited permission:', permissionInput.value);
+            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
+            const permissionInput = permissionList.children[index].querySelector('td:nth-child(2)');
+            const editedPermission = prompt('Enter the edited permission:', permissionInput.textContent);
             if (editedPermission !== null) {
-                permissionInput.value = editedPermission;
+                permissionInput.textContent = editedPermission;
             }
         }
 
         function deletePermission(index) {
-            const permissionList = document.getElementById('permissionList');
+            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
             permissionList.removeChild(permissionList.children[index]);
             if (permissionList.children.length === 0) {
                 document.getElementById('permissionForm').style.display = 'none'; 
             }
-        }
-
-        function updatePermissions() {
-            const role = document.getElementById('role').value;
-            const permissionList = document.querySelectorAll('#permissionList input[type="text"]');
-            const permissions = Array.from(permissionList).map(input => input.value);
-            console.log('Role:', role);
-            console.log('Permissions:', permissions);
-            alert('Permissions updated successfully!');
         }
     </script>
 </body>
