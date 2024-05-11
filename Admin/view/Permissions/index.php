@@ -6,6 +6,7 @@
     <title>Permission Management</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-gray-100 p-8">
     <div class="max-w-3xl mx-auto bg-white p-5 rounded-lg shadow-xl">
@@ -27,71 +28,71 @@
                     <option value="Delete">Delete</option>
                 </select>
             </div>
-            <button type="button" onclick="addPermissions()" class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button type="button" id="addPermissionsBtn" class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Permissions
             </button>
         </form>
     </div>
-    <table class="table-auto" id="permissionList">
-        <thead>
-            <tr>
-                <th>Role</th>
-                <th>Permission</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Permissions will be dynamically added here -->
-        </tbody>
-    </table>
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <div class="max-w-3xl mx-auto bg-white p-5 rounded-lg shadow-xl mt-8 table-responsive">
+        <h2 class="text-lg font-bold mb-4">Permission List</h2>
+        <table class="table-auto table table-bordered" id="permissionList">
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Permissions</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="permissionBody">
+                <!-- Permissions will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        const selectElement = new Choices('#permissions', {
-            removeItemButton: true,
-            maxItemCount: 5,
-            searchEnabled: true,
-            searchChoices: true,
-            shouldSort: false,
-            placeholder: true,
-            placeholderValue: 'Select permissions',
-        });
+        $(document).ready(function(){
+            $("#addPermissionsBtn").click(function(){
+                var role = $("#role").val();
+                var permissions = $("#permissions").val();
 
-        function addPermissions() {
-            const selectedPermissions = selectElement.getValue(true);
-            const role = document.getElementById('role').value;
-            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
-            permissionList.innerHTML = ''; // Clear current list
-            selectedPermissions.forEach((permission, index) => {
-                const permissionRow = document.createElement('tr');
-                permissionRow.innerHTML = `
-                    <td>${role}</td>
-                    <td>${permission}</td>
-                    <td>
-                        <button type="button" onclick="editPermission(${index})" class="px-3 py-2 bg-yellow-500 text-white rounded-md">Edit</button>
-                        <button type="button" onclick="deletePermission(${index})" class="px-3 py-2 bg-red-500 text-white rounded-md">Delete</button>
-                    </td>
-                `;
-                permissionList.appendChild(permissionRow);
+                var existingRow = $(`#permissionBody tr[data-role="${role}"]`);
+                if (existingRow.length > 0) {
+                    var permissionCell = existingRow.find(".permissions");
+                    $.each(permissions, function(index, permission){
+                        permissionCell.append(permission + "<br>");
+                    });
+                } else {
+                    var newRow = $("<tr>").attr("data-role", role);
+                    var roleCell = $("<td>").text(role);
+                    var permissionCell = $("<td>").addClass("permissions");
+                    $.each(permissions, function(index, permission){
+                        permissionCell.append(permission + "<br>");
+                    });
+                    var actionCell = $("<td>");
+                    var editBtn = $("<button>").text("Edit");
+                    var deleteBtn = $("<button>").text("Delete");
+                    deleteBtn.click(function(){
+                        // Implement delete functionality here
+                        $(this).closest("tr").remove();
+                    });
+                    editBtn.click(function(){
+                        // Implement update functionality here
+                        var newPermissions = prompt("Enter new permissions:");
+                        if (newPermissions !== null) {
+                            permissionCell.empty();
+                            $.each(newPermissions.split(','), function(index, permission){
+                                permissionCell.append(permission.trim() + "<br>");
+                            });
+                        }
+                    });
+                    actionCell.append(editBtn).append(deleteBtn);
+                    newRow.append(roleCell);
+                    newRow.append(permissionCell);
+                    newRow.append(actionCell);
+                    $("#permissionBody").append(newRow);
+                }
             });
-            document.getElementById('permissionForm').style.display = 'block';
-        }
-
-        function editPermission(index) {
-            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
-            const permissionInput = permissionList.children[index].querySelector('td:nth-child(2)');
-            const editedPermission = prompt('Enter the edited permission:', permissionInput.textContent);
-            if (editedPermission !== null) {
-                permissionInput.textContent = editedPermission;
-            }
-        }
-
-        function deletePermission(index) {
-            const permissionList = document.getElementById('permissionList').getElementsByTagName('tbody')[0];
-            permissionList.removeChild(permissionList.children[index]);
-            if (permissionList.children.length === 0) {
-                document.getElementById('permissionForm').style.display = 'none'; 
-            }
-        }
+        });
     </script>
 </body>
 </html>
