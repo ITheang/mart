@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-gray-100 p-8">
-    <div class="max-w-3xl mx-auto bg-white p-5 rounded-lg shadow-xl">
+    <div class="max-w-6xl mx-auto bg-white p-5 rounded-lg shadow-xl">
         <h1 class="text-xl font-bold mb-4">Manage User Permissions</h1>
         <form id="selectForm">
             <div>
                 <label for="role" class="block text-sm font-medium text-gray-700">User name</label>
                 <input type="text" id="role" name="role"
-                    class="mt-1 block w-full px-3 py-2 bg-white border border-pink-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-600 focus:border-pink-600" required>
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-pink-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-600 focus:border-pink-600"
+                    required>
             </div>
             <div>
                 <label for="permissions" class="block text-sm font-medium text-gray-700">Select Permissions</label>
@@ -28,71 +30,61 @@
                     <option value="Delete">Delete</option>
                 </select>
             </div>
-            <button type="button" id="addPermissionsBtn" class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button type="button" id="addPermissionsBtn"
+                class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Permissions
             </button>
         </form>
     </div>
-    <div class="max-w-3xl mx-auto bg-white p-5 rounded-lg shadow-xl mt-8 table-responsive">
-        <h2 class="text-lg font-bold mb-4">Permission List</h2>
-        <table class="table-auto table table-bordered" id="permissionList">
-            <thead>
-                <tr>
-                    <th>Role</th>
-                    <th>Permissions</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="permissionBody">
-                <!-- Permissions will be dynamically added here -->
-            </tbody>
-        </table>
-    </div>
+    <section class="bg-white ">
+        <div class="container ">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full px-4">
+                    <div class="max-w-full overflow-x-auto">
+                        <table id="permissionsTable" class="table-auto">
+                            <thead>
+                                <tr class="text-center bg-primary">
+                                    <th
+                                        class="w-1/6 min-w-[160px] border-l border-transparent py-4 px-3 text-lg font-medium text-white lg:py-7 lg:px-4">
+                                        Role
+                                    </th>
+                                    <th
+                                        class="w-1/6 min-w-[160px] py-4 px-3 text-lg font-medium text-white lg:py-7 lg:px-4">
+                                        Permissions
+                                    </th>
+                                    <th
+                                        class="w-1/6 min-w-[160px] py-4 px-3 text-lg font-medium text-white lg:py-7 lg:px-4">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Existing rows will be added here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script>
-        $(document).ready(function(){
-            $("#addPermissionsBtn").click(function(){
+        $(document).ready(function () {
+            $("#addPermissionsBtn").click(function () {
                 var role = $("#role").val();
-                var permissions = $("#permissions").val();
-
-                var existingRow = $(`#permissionBody tr[data-role="${role}"]`);
-                if (existingRow.length > 0) {
-                    var permissionCell = existingRow.find(".permissions");
-                    $.each(permissions, function(index, permission){
-                        permissionCell.append(permission + "<br>");
-                    });
-                } else {
-                    var newRow = $("<tr>").attr("data-role", role);
-                    var roleCell = $("<td>").text(role);
-                    var permissionCell = $("<td>").addClass("permissions");
-                    $.each(permissions, function(index, permission){
-                        permissionCell.append(permission + "<br>");
-                    });
-                    var actionCell = $("<td>");
-                    var editBtn = $("<button>").text("Edit");
-                    var deleteBtn = $("<button>").text("Delete");
-                    deleteBtn.click(function(){
-                        // Implement delete functionality here
-                        $(this).closest("tr").remove();
-                    });
-                    editBtn.click(function(){
-                        // Implement update functionality here
-                        var newPermissions = prompt("Enter new permissions:");
-                        if (newPermissions !== null) {
-                            permissionCell.empty();
-                            $.each(newPermissions.split(','), function(index, permission){
-                                permissionCell.append(permission.trim() + "<br>");
-                            });
-                        }
-                    });
-                    actionCell.append(editBtn).append(deleteBtn);
-                    newRow.append(roleCell);
-                    newRow.append(permissionCell);
-                    newRow.append(actionCell);
-                    $("#permissionBody").append(newRow);
-                }
+                var permissions = $("#permissions").val().join(", ");
+                var newRow = "<tr>" +
+                    "<td class='text-dark border-b border-[#E8E8E8] bg-white dark:border-dark dark:bg-dark-2 dark:text-dark-7 py-5 px-2 text-center text-base font-medium'>" + role + "</td>" +
+                    "<td class='text-dark border-b border-[#E8E8E8] bg-[#F3F6FF] dark:bg-dark-3 dark:border-dark dark:text-dark-7 py-5 px-2 text-center text-base font-medium'>" + permissions + "</td>" +
+                    "<td class='text-dark border-b border-r border-[#E8E8E8] bg-white dark:border-dark dark:bg-dark-2 dark:text-dark-7 py-5 px-2 text-center text-base font-medium'>" +
+                    "<button type='button' class='btn btn-primary btnEdit'>Edit</button>" +
+                    "<button type='button' class='btn btn-primary btnDelete'>Delete</button>" +
+                    "</td>" +
+                    "</tr>";
+                $("#permissionsTable tbody").append(newRow);
             });
         });
     </script>
 </body>
+
 </html>
