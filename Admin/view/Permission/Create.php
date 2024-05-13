@@ -296,6 +296,7 @@
                         </div>
                     </div>
                     <div class="checkbox">
+                        
                         <table>Online Payment</table>
                         <div class="checkbox-con">
                             <input id="checkbox" type="checkbox">
