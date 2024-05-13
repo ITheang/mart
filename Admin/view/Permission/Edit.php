@@ -16,7 +16,7 @@
             .checkbox{
                 border: 2px solid #000; /* Black border with 2px thickness */
                 padding: 20px; /* Add some padding inside the box */
-                width: 20%; /* Make the box fit its content */
+                width: 30%; /* Make the box fit its content */
                 margin: 10px auto; /* Center the box horizontally */
             }
 
