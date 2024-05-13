@@ -1,4 +1,3 @@
-<!-- component -->
 <!DOCTYPE html>
 <html>
 
@@ -55,7 +54,7 @@
                 </a>
             </li>
             <li class="group">
-                <a href="../view/employees/index.php" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
+                <a href="" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Users</span>
                 </a>
             </li>
@@ -79,10 +78,13 @@
                     <span>Stock</span>
                 </a>
             </li>
-            <li class="group">
-                <a href="../view/Permissions/index.php" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
-                    <span>Permissions</span>
-                </a>
+
+            <li class="group ">
+                <select id="employeeDropdown" class="bg-pink-200 text-md font-semibold space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
+                    <option>employees</option>
+                    <option value="../view/employees/index.php" data-target="content" class="dropdown-link text-gray-500 hover:bg-pink-500 hover:text-white">Staff Information</option>
+                    <option value="../view/Permission/index.php" data-target="content" class="dropdown-link text-gray-500 hover:bg-pink-500 hover:text-white">Add Permission</option>
+                </select>
             </li>
             <li class="group">
                 <a href="../view/suppliers/index.php" target="content" class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
@@ -122,6 +124,22 @@
             </button>
         </div>
     </aside>
+
+    <script>
+        // Get the select element
+        const dropdown = document.getElementById('employeeDropdown');
+        // Add click event listener
+        dropdown.addEventListener('change', function() {
+            // Get the selected option
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+            // Get the target attribute
+            const target = selectedOption.getAttribute('data-target');
+            // Get the value (URL) attribute
+            const url = selectedOption.value;
+            // Open the URL in the specified target
+            window.open(url, target);
+        });
+    </script>
 </body>
 
 </html>
