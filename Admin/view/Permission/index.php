@@ -13,22 +13,13 @@
     <div class="contanner">
         <div class="p-2 text-center grid gap-x-1 gap-y-1 grid-cols-12 border border-transparent">
             <a href="Create.php"
-                class="mt-4 col-span-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">New
+                class="mt-4 col-span-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add New
                 Permission</a>
         </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-between mt-2">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="max-w-6xl   text-sm text-left rtl:text-right text-gray-500 dark:text-gray-200">
+                <thead class="text-xs text-gray-200 uppercase bg-pink-300 dark:bg-gray-200 dark:text-gray-200">
                     <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Email
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Password
-                        </th>
                         <th scope="col" class="px-6 py-3">
                             Role
                         </th>
@@ -38,17 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr
-                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            sarak
-                        </th>
-                        <td class="px-6 py-4">
-                            sarak@gmail.com
-                        </td>
-                        <td class="px-6 py-4">
-                            1111
-                        </td>
+                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <td class="px-6 py-4">
                             User
                         </td>
@@ -59,19 +40,10 @@
                                 class="justify-center py-1 px-2 text-center border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">Delete</a>
                         </td>
                     </tr>
-                    <tr
-                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Yu
-                        </th>
+                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        
                         <td class="px-6 py-4">
-                            Yu1111@gmail.com
-                        </td>
-                        <td class="px-6 py-4">
-                            1111
-                        </td>
-                        <td class="px-6 py-4">
-                            User
+                            Admin
                         </td>
                         <td class="px-6 py-4 flex">
                             <a href="Edit.php"
