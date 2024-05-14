@@ -4,107 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <title>Admin</title>
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
+    <title>Document</title>
+    <?php include 'Admin/root/Header.php'; ?>
+</head>
+<style>
+    .login-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        padding: 40px;
+        transform: translate(-50%, -50%);
+        background: black;
+        box-sizing: border-box;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+        border-radius: 10px;
     }
 
-    .menu {
+    .login-box .user-box {
+        position: relative;
+    }
+
+    .login-box .user-box input {
         width: 100%;
-        background-color: palegreen;
-        padding: 10px;
-        border-radius: 5px;
-        overflow: hidden;
+        padding: 10px 0;
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 30px;
+        border: none;
+        border-bottom: 1px solid #fff;
+        outline: none;
+        background: transparent;
     }
 
-    .menu h1 {
-        text-align: center;
+    .login-box .user-box label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 0;
+        font-size: 16px;
+        color: #fff;
+        pointer-events: none;
+        transition: .5s;
     }
 
-    .menu ul {
-        list-style-type: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+    .login-box .user-box input:focus~label,
+    .login-box .user-box input:valid~label {
+        top: -20px;
+        left: 0;
+        color: #bdb8b8;
+        font-size: 12px;
     }
 
-    .menu ul li {
-        margin-right: 30px;
-        margin-bottom: 10px;
-    }
-
-    .menu ul li:last-child {
-        margin-right: 0;
-    }
-
-    .menu ul li a {
+    .login-box form a {
+        position: relative;
+        display: inline-block;
+        padding: 10px 20px;
+        color: #ffffff;
+        font-size: 16px;
         text-decoration: none;
-        color: #333;
+        text-transform: uppercase;
+        overflow: hidden;
+        transition: .5s;
+        margin-top: 40px;
+        letter-spacing: 4px
+    }
+
+    .login-box a:hover {
+        background: #F70BD4;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #F70BD4,
+            0 0 25px #F939DC,
+            0 0 50px #FE54E5,
+            0 0 100px #FB7AE8;
+    }
+
+    .login-box a span {
+        position: absolute;
         display: block;
-        padding: 5px 10px;
-        border-radius: 3px;
-        transition: background-color 0.3s ease;
     }
 
-    .menu ul li a:hover {
-        background-color: #ddd;
-    }
+    @keyframes btn-anim1 {
+        0% {
+            left: -100%;
+        }
 
-    .contact {
-        width: 100%;
-        background-color: #eee;
-        min-height: 100vh;
-    }
-
-    @media only screen and (min-width: 768px) {
-
-        .contact {
-            width: 100%;
-            float: right;
+        50%,
+        100% {
+            left: 100%;
         }
     }
-    </style>
-</head>
 
-<body>
-    <div class="menu">
-        <ul>
-            <li><a href="#"><i class="fa-solid fa-bars"></i></a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> </a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> </a></li>
-            <li><a href="#"><i class="fas fa-users"></i> </a></li>
-            <li><a href="#"><i class="fa-solid fa-chart-simple"></i></a></li>
-            <li><a href="#"><i class="fas fa-home"></i> Online</a></li>
-            <li><a href=""><i class="fa-solid fa-bell"></i></a></li>
-            <li><a href="#"><i class="fas fa-search"></i></a></li>
-            <li><a href="#"><i class="fa-solid fa-right-to-bracket"></i></i></a></li>
-        </ul>
+    .login-box a span:nth-child(1) {
+        bottom: 2px;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #FB7AE8);
+        animation: btn-anim1 2s linear infinite;
+    }
+</style>
 
-    </div>
-    <div class="contact">
-        <h2>Contact</h2>
-        <h2>Contact2</h2>
-        <h2>Contact4</h2>
-        <h2>Contact6</4h2>
-            <h2>Contact7</h2 <h2> HI
-        </h2>
-        <h2> testing Pro Sarak2</h2>
-        <h2> testing Pro nouch</h2>
-        <h2> testing Pro Sarak</h2>
-        <h2>test Sak 09</h2>
-        <h2>test Sarak 10</h2>
-        <h2>test Sarak 10</h2>
-        <h2>test Sarak 10</h2>
-        <h2>test Sarak 10</h2>
-        <h2>test Sarak 10</h2>
+<body class="bg-gray-200">
+    <div class="container p-52 bg-center">
+
+        <div class="row mt-5">
+            <div class="login-box">
+                <form>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h1 class="text-pink-600">Welcome back to Pink Mart</h1>
+                            <p class="text-pink-300">Enter your credentail to login</p>
+                        </div>
+                    </div>
+                    <div class="user-box">
+                        <input type="text" name="" required="">
+                        <label>Username</label>
+                    </div>
+                    <div class="user-box">
+                        <input type="password" name="" required="">
+                        <label>Password</label>
+                    </div>
+                    <center>
+                        <a href="Admin/index.php">
+                            Login
+                            <span></span>
+                        </a>
+                    </center>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 
