@@ -14,7 +14,11 @@
 </head>
 <body>
     
-
+  <div class="p-2 text-center grid gap-x-1 gap-y-1 grid-cols-12 border border-transparent">
+            <a href="Create.php"
+                class="mt-4 col-span-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add New
+                Permission</a>
+        </div>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-10">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
