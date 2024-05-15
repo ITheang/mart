@@ -53,6 +53,7 @@
                         class="block font-medium text-gray-700 py-1 px-2 bg-pink-300 border border-pink-600">Action</label>
                 </div>
             </div>
+            
             <div class="grid grid-cols-12 border border-collapse border-transparent">
                 <div class="col-span-1">
                     <p class="py-1 px-2 text-center border border-pink-600">1</p>
@@ -72,7 +73,6 @@
                             class=" px-6 py-1 text-center inline-flex items-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800"
                             type="button"><i class="material-icons py-1" style="font-size:16px;">more_horiz</i>
                         </button>
-
                         <!-- Dropdown menu -->
                         <div id="dropdown"
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-28 dark:bg-gray-700">
