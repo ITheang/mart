@@ -2,7 +2,6 @@
 include("../../connection/conect.php");
 include("../../root/Header.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Extract data from the POST request
     $employeeId = $_POST['employeeId'];
     $customerId = $_POST['customerid'];
     $discountOrder = $_POST['discount_order'];
