@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-      Hellonouchgit git checkout braind
+      Hellonouchgit git  
 </body>
 </html>
