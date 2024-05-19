@@ -76,7 +76,7 @@
             `;
             productList.appendChild(productRow);
             document.getElementById('orderForm').style.display = 'block';
-            calculateTotal();
+            calculateTotal(); 
         }
 
         function removeProduct(element) {
