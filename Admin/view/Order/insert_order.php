@@ -11,18 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $discounts = $_POST['discount'];
     $currentDateTime = date('Y-m-d H:i:s');
 
-
     try {
         $conn->begin_transaction();
 
         $insertOrderQuery = "INSERT INTO tblorder (employeeid, customerid, discount, orderdate) VALUES (?, ?, ?, ?)";
         $insertOrderStmt = $conn->prepare($insertOrderQuery);
-        $insertOrderStmt->bind_param("iiii", $employeeId, $customerId, $discountOrder, $currentDateTime);
+        $insertOrderStmt->bind_param("iiis", $employeeId, $customerId, $discountOrder, $currentDateTime);
         $insertOrderStmt->execute();
 
         $orderId = $insertOrderStmt->insert_id;
 
         $insertDetailStmt = $conn->prepare("INSERT INTO tblorderdetail (orderid, productid, quantity, unitprice, discount) VALUES (?, ?, ?, ?, ?)");
+        $updateStockStmt = $conn->prepare("UPDATE tblproduct SET instock = instock - ? WHERE productid = ?");
 
         $totalAmount = 0;
 
@@ -37,14 +37,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insertDetailStmt->bind_param("iiddd", $orderId, $productId, $quantity, $unitprice, $discount);
             $insertDetailStmt->execute();
 
-            $updateStockQuery = "UPDATE tblproduct SET instock = instock - ? WHERE productid = ?";
-            $updateStockStmt = $conn->prepare($updateStockQuery);
             $updateStockStmt->bind_param("ii", $quantity, $productId);
             $updateStockStmt->execute();
+
+            $checkStockQuery = "SELECT instock FROM tblproduct WHERE productid = ?";
+            $checkStockStmt = $conn->prepare($checkStockQuery);
+            $checkStockStmt->bind_param("i", $productId);
+            $checkStockStmt->execute();
+            $checkStockStmt->bind_result($instock);
+            $checkStockStmt->fetch();
+            $checkStockStmt->close();
+
+            $insertLogStmt = $conn->prepare("INSERT INTO tblinventorylog (productid, changeamount, changedate, reason) VALUES (?, ?, ?, ?)");
+            $changeAmount = -$quantity; 
+            $reason = "Product Sold Out";
+            $insertLogStmt->bind_param("iiss", $productId, $changeAmount, $currentDateTime, $reason);
+            $insertLogStmt->execute();
+            $insertLogStmt->close();
         }
 
         $insertOrderStmt->close();
         $insertDetailStmt->close();
+        $updateStockStmt->close();
 
         $updateOrderQuery = "UPDATE tblorder SET totalamount = ? WHERE orderid = ?";
         $updateOrderStmt = $conn->prepare($updateOrderQuery);
@@ -53,18 +67,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $conn->commit();
 
-        $sql = "
-            SELECT 
-                e.employeename, 
-                c.customername, 
-                c.address,
-                c.phonenumber 
-            FROM 
-                tblemployee e, tblcustomer c 
-            WHERE 
-                e.employeeid = ? AND c.customerid = ?
-        ";
-
+        $sql = "SELECT e.employeename, c.customername, c.address, c.phonenumber 
+                FROM tblemployee e, tblcustomer c 
+                WHERE e.employeeid = ? AND c.customerid = ?";
         if ($stmt = mysqli_prepare($conn, $sql)) {
             mysqli_stmt_bind_param($stmt, "ii", $employeeId, $customerId);
             mysqli_stmt_execute($stmt);
@@ -76,19 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        $orderDetailsQuery = "
-            SELECT 
-                p.productname, 
-                od.unitprice, 
-                od.quantity, 
-                od.discount 
-            FROM 
-                tblorderdetail od 
-                JOIN tblproduct p ON od.productid = p.productid 
-            WHERE 
-                od.orderid = ?
-        ";
-
+        $orderDetailsQuery = "SELECT p.productname, od.unitprice, od.quantity, od.discount 
+                              FROM tblorderdetail od 
+                              JOIN tblproduct p ON od.productid = p.productid 
+                              WHERE od.orderid = ?";
         $orderDetailsStmt = $conn->prepare($orderDetailsQuery);
         $orderDetailsStmt->bind_param("i", $orderId);
         $orderDetailsStmt->execute();
@@ -110,8 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $e->getMessage();
     }
 
-    
-
     $conn->close();
 }
 ?>
@@ -128,53 +122,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container mx-auto p-10">
-        <div class="bg-gray-200 p-4 border-2 border-pink-400">
+        <div class="bg-gray-200 border-2 border-pink-400">
             <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                 <div class="sm:col-span-12">
-                    <h1 class="text-b text-pink-500 text-5xl">Pink Mart</h1>
+                    <h1 class="text-b text-pink-500 text-5xl px-10">Pink Mart</h1>
                 </div>
                 <div class="sm:col-span-12 text-right">
-                    <h1 class="text-b text-pink-500 text-5xl">Invoice</h1>
+                    <h1 class="text-b text-pink-500 text-5xl px-10">Invoice</h1>
                 </div>
                 <div class="sm:col-span-12">
-                    <h1 class="text-b text-pink-500 text-sm">Invoice Number: <?php echo $orderId; ?></h1>
+                    <h1 class="text-b text-pink-500 text-sm px-10">Invoice Number: <?php echo $orderId; ?></h1>
                 </div>
                 <div class="sm:col-span-12">
-                    <h1 class="text-b text-pink-500 text-sm">Date: <?php echo $currentDateTime; ?></h1>
-                </div>
-                <div class="sm:col-span-12">
-                    <div class="border-b border-1 border-pink-400 my-1"></div>
-                </div>
-                <div class="sm:col-span-6">
-                    <p class="text-base font-medium">Bill From:</p>
-                </div>
-                <div class="sm:col-span-6">
-                    <p class="text-base font-medium">Bill To:</p>
-                </div>
-                <div class="sm:col-span-6">
-                    <p class="text-base">Pink Mart:</p>
-                    <p class="text-base">Phnom Penh:</p>
-                    <p class="text-base">0716879103:</p>
-                </div>
-                <div class="sm:col-span-6">
-                    <p class="text-base">Bill To:</p>
-                    <p><?php echo $customerName; ?></p>
-                    <p><?php echo $customerAddress; ?></p>
-                    <p><?php echo $customerPhone; ?></p>
+                    <h1 class="text-b text-pink-500 text-sm px-10">Date: <?php echo $currentDateTime; ?></h1>
                 </div>
                 <div class="sm:col-span-12">
                     <div class="border-b border-1 border-pink-400 my-1"></div>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-6">
+                    <p class="text-base font-medium px-10">Bill From:</p>
+                </div>
+                <div class="sm:col-span-6">
+                    <p class="text-base font-medium px-10">Bill To:</p>
+                </div>
+                <div class="sm:col-span-6">
+                    <p class="text-base px-10">Pink Mart:</p>
+                    <p class="text-base px-10">Phnom Penh:</p>
+                    <p class="text-base px-10">0716879103:</p>
+                </div>
+                <div class="sm:col-span-6">
+                    <p class="text-base px-10">Bill To:</p>
+                    <p class="text-base px-10"><?php echo $customerName; ?></p>
+                    <p class="text-base px-10"><?php echo $customerAddress; ?></p>
+                    <p class="text-base px-10"><?php echo $customerPhone; ?></p>
+                </div>
+                <div class="sm:col-span-12">
+                    <div class="border-b border-1 border-pink-400 my-1"></div>
+                </div>
+                <div class="sm:col-span-3 px-10">
                     <p class="text-base font-semibold">Item</p>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-3 px-10">
                     <p class="text-base font-semibold">Price</p>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-3 px-10">
                     <p class="text-base font-semibold">Quantity</p>
                 </div>
-                <div class="sm:col-span-3">
+                <div class="sm:col-span-3 px-10">
                     <p class="text-base font-semibold">Discount</p>
                 </div>
                 <div class="sm:col-span-12">
@@ -219,8 +213,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="border-b border-1 border-pink-400 my-1"></div>
                 </div>
                 <div class="sm:col-span-12 text-right">
-                    <p class="text-base font-semibold">Total:
-                        $ <?php echo number_format($totalAmount * (1 - ($discountOrder / 100)), 2) ?></p>
+                    <p class="text-base font-semibold">Total: $
+                        <?php echo number_format($totalAmount * (1 - ((float)$discountOrder / 100)), 2) ?></p>
+
                 </div>
             </div>
         </div>
