@@ -69,24 +69,24 @@
                     <span>Products</span>
                 </a>
             </li>
-            <li class="group">
+            <!-- <li class="group">
                 <a href="../view/sex/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Sex</span>
                 </a>
-            </li>
+            </li> -->
             <li class="group">
                 <a href="../view/customers/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Customers</span>
                 </a>
             </li>
-            <li class="group">
+            <!-- <li class="group">
                 <a href="../view/stock_in/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Stock</span>
                 </a>
-            </li>
+            </li> -->
             <li class="opcion-con-desplegable group">
                 <div class="flex items-center justify-between p-4 space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <div class="flex items-center">
@@ -115,30 +115,30 @@
                     <span>Suppliers</span>
                 </a>
             </li>
-            <li class="group">
+            <!-- <li class="group">
                 <a href="../view/payment_type/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Payment Type</span>
                 </a>
-            </li>
-            <li class="group">
+            </li> -->
+            <!-- <li class="group">
                 <a href="../view/payments/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Payment</span>
                 </a>
-            </li>
+            </li> -->
             <li class="group">
                 <a href="../view/Order/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Orders</span>
                 </a>
             </li>
-            <li class="group">
+            <!-- <li class="group">
                 <a href="../view/transactions/index.php" target="content"
                     class="flex items-center space-x-2 py-2 px-4 rounded-md text-gray-500 hover:bg-pink-500 hover:text-white transition-colors duration-300">
                     <span>Transaction</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
 
         <!-- Sidebar Footer -->
